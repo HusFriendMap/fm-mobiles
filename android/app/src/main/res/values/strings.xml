@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HeyU</string>
+    <string name="update_server">http://</string>
+    <string name="update_server_static">http://</string>
+    <string name="gg_android_browser_key">AIzaSyA8G2Ea1xKUhRo2ZKnLzrhdM5PzR9DlnXc</string>
+    <string name="fb_app_id">1602096409889417</string>
+</resources>
