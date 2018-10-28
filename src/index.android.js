@@ -37,7 +37,7 @@ var Util = require('./Util/Util');
 
     // variable
 
-  class HeyU extends Component {
+  class FriendMap extends Component {
     constructor() {
       super();
       this.state = {
@@ -47,7 +47,7 @@ var Util = require('./Util/Util');
         applyMiddleware(thunk),
         autoRehydrate(),
         // devTools({
-        //   name: 'HeyU', realtime: true ,port:8000
+        //   name: 'FriendMap', realtime: true ,port:8000
         // }),
         );
       this.store = createStore(todoApp, enhancer);
@@ -74,4 +74,4 @@ var Util = require('./Util/Util');
 
 
 
-  AppRegistry.registerComponent('HeyU', () => HeyU);
+  AppRegistry.registerComponent('FriendMap', () => FriendMap);

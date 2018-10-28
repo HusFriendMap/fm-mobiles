@@ -21,7 +21,7 @@ goto :eof
   set _name=%1
   set current_path=%cd%
   rem Change the path to a relative path by replacing the current folder with ""
-  set _name=%_name:D:\Code\RNProj\HeyU\=%
+  set _name=%_name:D:\Code\RNProj\FriendMap\=%
 
   rem Replace slashes with hyphens
   set _name=%_name:\=_%

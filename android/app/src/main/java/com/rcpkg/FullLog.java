@@ -2,7 +2,7 @@ package com.rcpkg;
 
 import android.util.Log;
 
-import com.heyu.BuildConfig;
+import com.friendmap.BuildConfig;
 
 public class FullLog {
     public final static boolean DEBUG = true;

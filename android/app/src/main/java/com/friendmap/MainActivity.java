@@ -1,4 +1,4 @@
-package com.heyu;
+package com.friendmap;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -55,7 +55,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "HeyU";
+        return "FriendMap";
     }
 
     @Override

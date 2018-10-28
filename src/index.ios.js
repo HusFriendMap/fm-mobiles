@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class HeyU extends Component {
+class FriendMap extends Component {
   constructor() {
     super();
     this.state = {
@@ -117,4 +117,4 @@ class HeyU extends Component {
 
 
 
-AppRegistry.registerComponent('HeyU', () => HeyU);
+AppRegistry.registerComponent('FriendMap', () => FriendMap);

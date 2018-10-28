@@ -91,7 +91,7 @@ android {
     buildToolsVersion "25.0.3"
 
     defaultConfig {
-        applicationId "com.heyu"
+        applicationId "com.friendmap"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 10000
@@ -134,13 +134,13 @@ android {
     }
     productFlavors {
         dev {
-            applicationId "com.heyu.dev"
+            applicationId "com.friendmap.dev"
             versionCode 1000088
             versionName "1.0.0-a-dev"
             signingConfig signingConfigs.dev
         }
         pro {
-            applicationId "com.heyu.pro"
+            applicationId "com.friendmap"
             versionCode 10000
             versionName "1.0.0-a"
             signingConfig signingConfigs.release
