@@ -59,6 +59,7 @@ var Define = {
     serverAddr :'https://api.sanship.vn',  // production // http://123.30.235.63:9696/
     // serverAddr:'http://123.30.235.201:34746',
     // serverAddr :'http://192.168.3.151:8080',
+    proxyAddr: 'http://proxy.sanship.info/config',
     apiVersion:2,
     font:PlatformConfig.font,
     fontBold:PlatformConfig.fontBold,
