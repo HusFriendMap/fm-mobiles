@@ -135,8 +135,8 @@ android {
     productFlavors {
         dev {
             applicationId "com.friendmap.dev"
-            versionCode 1000088
-            versionName "1.0.0-a-dev"
+            versionCode 10000
+            versionName "1.0.0"
             signingConfig signingConfigs.dev
         }
         pro {
