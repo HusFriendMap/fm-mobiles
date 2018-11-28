@@ -40,6 +40,7 @@ import java.util.List;
 
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import me.neo.react.StatusBarPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 
 class UpdateTask extends AsyncTask<Void, Boolean, Void> {
 
@@ -150,7 +151,8 @@ public class MainApplication extends Application implements ReactApplication {
             new SensorManagerPackage(),
             new RNSpinkitPackage(),
             new RNIntentPackage(),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new LinearGradientPackage() 
       );
     }
   };

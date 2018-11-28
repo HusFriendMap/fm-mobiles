@@ -23,6 +23,7 @@
     "react-native-fs": "^2.3.3",
     "react-native-gifted-spinner": "^0.1.0",
     "react-native-google-places-autocomplete": "git+https://github.com/tuanhm93/react-native-google-places-autocomplete.git",
+    "react-native-linear-gradient": "^2.4.3",
     "react-native-maps": "^0.15.2",
     "react-native-orientation": "git+https://github.com/InnerPeace080/react-native-orientation.git",
     "react-native-restart": "0.0.1",
