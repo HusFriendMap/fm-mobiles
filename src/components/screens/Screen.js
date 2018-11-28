@@ -4,16 +4,19 @@ var _ = require('lodash')
 import React  from 'react';
 import {
   View,
-  InteractionManager
+  InteractionManager,
+  StatusBar,
+  Platform
 } from 'react-native';
 
 
 // import { connect } from 'react-redux';
 var Spinner = require('react-native-spinkit');
+import LinearGradient from 'react-native-linear-gradient';
 //action
 
 //components
-// var Define = require('../../Define');
+var Define = require('../../Define');
 var Debug = require('../../Util/Debug');
 var Themes = require('../../Themes');
 // var Util = require('../../Util/Util');
@@ -75,12 +78,30 @@ class Screen extends ReactComponent{
             pointerEvents={'auto'}
             style={[Themes.current.screen.bodyView,this.props.bodyStyle,{justifyContent: 'center', alignItems: 'center'}]}>
           <Spinner type={'ThreeBounce'} color={Themes.current.factor.spinnerColor} />
+          {Platform.OS === 'android'?
+            <StatusBar
+              translucent={true}
+              backgroundColor="rgba(0, 0, 0, 0)"
+            />
+          :null}
         </View>
-      ) ;
+      );
     }
     else{
       if (_.isFunction(this.renderScreenContent) ) {
-        content = this.renderScreenContent();
+        if(this.constructor.componentName === 'FeedsScreenContainer' || Platform.OS === 'ios') {
+          content = this.renderScreenContent();
+        } else {
+          content = (
+            <View style={{flex:1}}>
+              <StatusBar
+                translucent={true}
+                backgroundColor="rgba(0, 0, 0, 0)"
+              />
+              {this.renderScreenContent()}
+            </View>
+          );
+        }
       }else{
         Debug.log(this.constructor.componentName+':no renderScreenContent',Debug.level.ERROR)
         content = null;
@@ -98,6 +119,10 @@ class Screen extends ReactComponent{
 
   componentWillMount() {
     super.componentWillMount();
+    if(Platform.OS === 'android') {
+      StatusBar.setTranslucent(true);
+      StatusBar.setBackgroundColor('rgba(0, 0, 0, 0)')
+    }
   }
 
   componentWillUnmount() {

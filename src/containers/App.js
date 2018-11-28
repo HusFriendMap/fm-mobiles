@@ -77,8 +77,8 @@ import PickCardTypeScreen from '../components/screens/PickCardTypeScreen'
 import PickCardPriceScreen from '../components/screens/PickCardPriceScreen'
 
 var screenList=[
-  LoginScreen,
   HomeScreen,
+  LoginScreen,
   SecondScreen,
   ContainerScreen,
   PickCardTypeScreen,
@@ -570,9 +570,6 @@ var App = React.createClass({
   isDisableSideMenu() {
     let {navigator} = this.props;
     let currentSceneName = navigator.currentScreen.name;
-    if(currentSceneName === 'LoginScreen') {
-      return true;
-    }
 
     return false;
   },

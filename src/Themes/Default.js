@@ -1,9 +1,11 @@
 
 var Define = require('../Define'); // var Include = require('../Include');
 var StyleConfig = require('./StyleConfig');
-
+import {
+  Platform,
+} from 'react-native';
 var X = Define.constants.X;
-
+var paddingTopOption = Platform.OS === 'android' ? 7 : 0;
 var Default ={
   init:function(){
     return (
@@ -11,7 +13,7 @@ var Default ={
   screen:{
     appBackground:{
       flex:1,
-      backgroundColor:'#ffffff',
+      // backgroundColor:'transparent',
       // ...StyleConfig.default.shadownStyle,
     },
     NavBar:{
@@ -21,19 +23,19 @@ var Default ={
       ...StyleConfig.default.shadownStyle,
     },
     leftButtonWrapNavBar:{
-      position:'absolute',top: 0,left:0,paddingLeft: 10, paddingRight:10,height:Define.constants.navBarHeight, flexDirection:'row',alignItems:'center',justifyContent:'flex-start',
+      backgroundColor: 'transparent', position:'absolute',top: paddingTopOption,left:0,paddingLeft: 10, paddingRight:10,height:Define.constants.navBarHeight, flexDirection:'row',alignItems:'center',justifyContent:'flex-start',
     },
     leftButtonIcon:{
-      marginLeft:10,width:10,height:20,tintColor :'#FFF',
+      marginLeft:10,width:10,height:20,tintColor :'#FFF',paddingTop: paddingTopOption
     },
     rightButtonWrapNavBar:{
-      position:'absolute',top: 0,right:10,paddingLeft:10,height:Define.constants.navBarHeight,flexDirection:'row',alignItems:'center',justifyContent:'flex-end',
+      backgroundColor: 'transparent', position:'absolute',top: paddingTopOption,right:10,paddingLeft:10,height:Define.constants.navBarHeight,flexDirection:'row',alignItems:'center',justifyContent:'flex-end',
     },
     titleWrapNavBarCenter:{
-      left:0,right:0,top:0,height:Define.constants.navBarHeight,position:'absolute',alignSelf:'center',alignItems :'center' ,justifyContent:'center',
+      backgroundColor: 'transparent', left:0,right:0,top:paddingTopOption,height:Define.constants.navBarHeight,position:'absolute',alignSelf:'center',alignItems :'center' ,justifyContent:'center',
     },
     titleWrapNavBarLeft:{
-      left:40,right:0,top:0,height:Define.constants.navBarHeight,position:'absolute',alignSelf:'center',alignItems :'flex-start',justifyContent:'center',
+      left:40,right:0,top:paddingTopOption,height:Define.constants.navBarHeight,position:'absolute',alignSelf:'center',alignItems :'flex-start',justifyContent:'center',
     },
     bodyViewNoNavBarWrap:{
       // justifyContent: 'flex-start',
@@ -144,8 +146,6 @@ var Default ={
     },
     titleWrap:{
       alignSelf:'stretch',
-      borderBottomWidth:1,
-      borderBottomColor:'#1b1b1b',
       paddingLeft: 10,
       paddingRight: 10
     },
@@ -192,7 +192,7 @@ var Default ={
       fontSize:15,fontFamily:Define.constants.fontBold
     },
     popupTitle:{
-      fontSize:15,fontFamily: Define.constants.fontBold,color:'#000',textAlign:'center'
+      fontSize:16,fontFamily: Define.constants.fontBold,color:'#000',textAlign:'center', fontWeight:'500'
     },
     popupDescription:{
       left:0,right:0,color:'#000',marginVertical:5,alignSelf:'center',textAlign :'center'
@@ -341,6 +341,12 @@ var Default ={
       borderRadius: 3,
       margin:2
     },
+  },
+  linearConfig: {
+    start: {x: 0, y: 0},
+    end: {x: 1, y: 0},
+    colors: ['#01cca1', '#1795b5'],
+    style: {flex: 1}
   },
   factor:{
     shadownStyle:StyleConfig.default.shadownStyle,
