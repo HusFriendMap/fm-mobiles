@@ -41,6 +41,7 @@ import java.util.List;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import me.neo.react.StatusBarPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 
 class UpdateTask extends AsyncTask<Void, Boolean, Void> {
 
@@ -152,7 +153,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNSpinkitPackage(),
             new RNIntentPackage(),
             new FBSDKPackage(mCallbackManager),
-            new LinearGradientPackage() 
+            new LinearGradientPackage(),
+            new VectorIconsPackage()
       );
     }
   };

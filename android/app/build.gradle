@@ -71,6 +71,11 @@ import com.android.build.OutputFile
 
 apply from: "../../node_modules/react-native/react.gradle"
 
+project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf', 'AntDesign.ttf' ] // Name of the font files you want to copy
+]
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -211,6 +216,10 @@ dependencies {
     }
 
     compile(project(':react-native-linear-gradient')) {
+        exclude group: 'com.facebook.react', module: 'react-native'
+    }
+
+    compile(project(':react-native-vector-icons')) {
         exclude group: 'com.facebook.react', module: 'react-native'
     }
 

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1018011127840",
+    "firebase_url": "https://friend-map-1544408883973.firebaseio.com",
+    "project_id": "friend-map-1544408883973",
+    "storage_bucket": "friend-map-1544408883973.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018011127840:android:f09d166bf71354b5",
+        "android_client_info": {
+          "package_name": "com.friendmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018011127840-25bt0igp4hvlgjsbe9e2bvs4qp5avj5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCr9SMKMgpG--PC9WOtELjO5IDfoo2w8ac"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

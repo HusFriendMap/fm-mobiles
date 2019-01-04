@@ -8,7 +8,8 @@ import {
   ScrollView,
   RefreshControl,
   Text,
-  StyleSheet
+  StyleSheet,
+  InteractionManager
 } from 'react-native';
 
 var {Actions} = require('react-native-router-flux');
@@ -59,6 +60,7 @@ class ContainerScreen extends Screen{
     super(props);
     this.state = _.merge(this.state,
     {})
+    this.pages=[];
   }
 
   // static renderLeftButton(scene){
@@ -101,25 +103,42 @@ class ContainerScreen extends Screen{
       style={{ backgroundColor:'#ffff' }}
       initialPage={0}
       tabBarPosition={'bottom'}
+      scrollWithoutAnimation={true}
+      onChangeTab={(tab) => {
+        if(this.tabFocus !== tab.i) {
+          this.tabFocus = tab.i;
+
+          InteractionManager.runAfterInteractions(() => {
+            this.pages[tab.i].getWrappedInstance().forceUpdate();
+          });
+        }
+      }}
       renderTabBar={() => <BottomTabBar />}
     >
-      <HomeScreen tabLabel="ios-home"/>
-      <SecondScreen tabLabel="ios-cart" />
-      <ScrollView tabLabel="ios-chatboxes"  style={styles.tabView}>
-        <View style={styles.card}>
-          <Text>Messenger</Text>
-        </View>
-      </ScrollView>
-      <ScrollView tabLabel="ios-notifications"  style={styles.tabView}>
-        <View style={styles.card}>
-          <Text>Notifications</Text>
-        </View>
-      </ScrollView>
-      <ScrollView tabLabel="ios-list"  style={styles.tabView}>
-        <View style={styles.card}>
-          <Text>Other nav</Text>
-        </View>
-      </ScrollView>
+      <HomeScreen
+        ref={ref => this.pages[0] = ref}
+        tabLabel={"Trang chủ"}
+        tabIndex = {0}
+        tabView={this}
+        />
+      <SecondScreen
+        ref={ref => this.pages[1] = ref}
+        tabLabel={"Yêu thích"}
+        tabIndex = {1}
+        tabView={this}
+      />
+      <SecondScreen
+        ref={ref => this.pages[2] = ref}
+        tabLabel={"Đóng góp"}
+        tabIndex = {1}
+        tabView={this}
+      />
+      <SecondScreen
+        ref={ref => this.pages[3] = ref}
+        tabLabel={"Tài khoản"}
+        tabIndex = {1}
+        tabView={this}
+      />
     </ScrollableTabView>
     )
     return content;
