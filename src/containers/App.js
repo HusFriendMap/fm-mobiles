@@ -17,7 +17,8 @@ import {
   InteractionManager,
   UIManager,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  BackAndroid
 } from 'react-native';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -25,7 +26,7 @@ import * as Animatable from 'react-native-animatable';
 import RNRestart from 'react-native-restart';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import { connect } from 'react-redux'
-import SideMenu from 'react-native-side-menu';
+const SideMenu = require('react-native-side-menu');
 import {Scene, Reducer, Router, Switch, TabBar, Modal, Schema, Actions} from 'react-native-router-flux'
 const RouterWithRedux = connect()(Router);
 var Orientation = require('react-native-orientation');
@@ -482,7 +483,7 @@ var App = React.createClass({
       // }
     });
     //key
-    BackHandler.addEventListener('hardwareBackPress',
+    BackAndroid.addEventListener('hardwareBackPress',
        () => {
          // must update
          appState = self.props.appState;
@@ -503,23 +504,36 @@ var App = React.createClass({
            return true;
          }
          else if (!(appState.currentState === RDActionsTypes.AppState.constants.APP_STATE_LIST.LOADING)) {
-           if (Actions.currentScene !== 'HomeScreen' && Actions.currentScene !== 'TemplateScreen') {
-             Actions.pop()
+           appSetting = globalVariableManager.reduxManager.state.AppSetting
+           if (navigator.currentScreen.name !== 'ContainerScreen'
+              ) {
+             if(Actions.pop()) {
+               return true;
+             }else{
+              //  RNIntent.moveTaskToBack();
+              //  return true;
+              // dispatch(UserActions_MiddleWare.signout())
+              // .then(()=>{
 
-            //  if(Actions.pop()) {
-            //    return true;
-            //  }else{
-            //   //  RNIntent.moveTaskToBack();
-            //   //  return true;
-            //   // dispatch(UserActions_MiddleWare.signout())
-            //   // .then(()=>{
-            //     RNIntent.exit();
-            //   // })
-            //   // .catch(()=>{
-            //   //   RNIntent.exit();
-            //   // })
-            //    return true;
-            //  }
+
+                if (!self.backFlag) {
+                  self.backFlag = true;
+                  ToastAndroid.show('Nhấn Back một lần nữa để thoát ứng dụng', ToastAndroid.SHORT);
+                  setTimeout(()=>{
+                    self.backFlag = false;
+                  },2000)
+                }else{
+                  ToastAndroid.show('Cám ơn bạn đã sử dụng Friend Map', ToastAndroid.LONG);
+                  setTimeout(()=>{RNIntent.exit();},500)
+                }
+
+
+              // })
+              // .catch(()=>{
+              //   RNIntent.exit();
+              // })
+               return true;
+             }
            }
            else{
             //  if (globalVariableManager.SCTVScrollableTabBarContainer &&
@@ -533,7 +547,18 @@ var App = React.createClass({
                //  return true;
               //  dispatch(UserActions_MiddleWare.signout())
               //  .then(()=>{
-                 RNIntent.exit();
+
+              if (!self.backFlag) {
+                self.backFlag = true;
+                ToastAndroid.show('Nhấn Back một lần nữa để thoát ứng dụng', ToastAndroid.SHORT);
+                setTimeout(()=>{
+                  self.backFlag = false;
+                },2000)
+              }else{
+                ToastAndroid.show('Cám ơn bạn đã sử dụng Friend Map', ToastAndroid.LONG);
+                setTimeout(()=>{RNIntent.exit();},500)
+              }
+
               //  })
               //  .catch(()=>{
               //    RNIntent.exit();
@@ -547,7 +572,10 @@ var App = React.createClass({
             //  return true;
             // dispatch(UserActions_MiddleWare.signout())
             // .then(()=>{
-              RNIntent.exit();
+              if(Platform.OS === 'android'){
+                  ToastAndroid.show('Cám ơn bạn đã sử dụng Friend Map', ToastAndroid.SHORT);
+                }
+              setTimeout(()=>{RNIntent.exit();},500)
             // })
             // .catch(()=>{
             //   RNIntent.exit();
@@ -560,7 +588,7 @@ var App = React.createClass({
 
       DeviceEventEmitter.addListener('hardwareMenuPress', ()=>{
         // if(globalVariableManager.reduxManager.state.Navigator.currentScreen.name !== 'LoginScreen'){
-        //     self.drawSideMenu();
+          self.drawSideMenu();
         // }
       });
       AppState.addEventListener('change', self.handleAppStateChange);
@@ -643,9 +671,9 @@ var App = React.createClass({
           disableGestures={self.isDisableSideMenu()}
           menu={self.renderSideMenu()}>
         <RouterWithRedux
-            sceneStyle={Themes.current.screen.appBackground}
-            navigationBarStyle={Themes.current.screen.NavBar}
-            backAndroidHandler={()=>{}}>
+          backAndroidHandler={()=>{}}
+          sceneStyle={Themes.current.screen.appBackground}
+          navigationBarStyle={Themes.current.screen.NavBar} >
           <Scene key="root">
             {self.screenList}
           </Scene>
@@ -687,9 +715,9 @@ var App = React.createClass({
   componentDidMount : function(){
      var self = this;
      var {dispatch} = self.props;
-     if (Platform.OS ==='android') {
-      StatusBarAndroid.setHexColor(Themes.current.factor.backgroundColor);
-     }
+     // if (Platform.OS ==='android') {
+     //  StatusBarAndroid.setHexColor(Themes.current.factor.backgroundColor);
+     // }
 
 
     //  // util connected
