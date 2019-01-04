@@ -113,21 +113,37 @@ class HomeScreen extends Screen{
     var {dispatch} = this.props;
     var content = null;
     content =(
-      <View style={{backgroundColor:'#fff', flex:1}}>
-        <View style={{height: 30, elevation:3, backgroundColor:'#c2c4c6', justifyContent:'center', flexDirection:'row'}}>
-          <Text style={{alignSelf:'center'}}>Title</Text>
-          <ButtonWrap
-            onPress={()=>{globalVariableManager.rootView.drawSideMenu(true)}}>
-            <View style={{position:'absolute',left:0, top: -5}}>
-              <Icon name='ios-menu' style={{fontSize: 32, lineHeight: 36, color: '#fff'}} />
-            </View>
-          </ButtonWrap>
-        </View>
-        <View style={{flexDirection:'column', backgroundColor:'#e0efff',margin:5,elevation:3 }}>
-          <View style={{flexDirection:'row',flexWrap: 'wrap', justifyContent: 'center'}}>
-            {this.state.listService.map(this.renderListService)}
-          </View>
-        </View>
+      <View style={{flex:1, backgroundColor:'#aaa'}}>
+        <MapView
+          ref = {ref => {
+            this._mapView = ref;
+          }}
+          style={{
+            flex: 1,
+            zIndex: 1
+          }}
+          provider={MapView.PROVIDER_GOOGLE}
+          showsMyLocationButton={false}
+          showsUserLocation={true}
+          followsUserLocation={false}
+          showsPointsOfInterest={false}
+          showsCompass={false}
+          showsScale={false}
+          showsBuildings={false}
+          showsTraffic={false}
+          showsIndoors={false}
+          cacheEnabled={false}
+          zoomEnabled={false}
+          scrollEnabled={false}
+          loadingEnabled={true}
+          initialRegion={{
+            latitude: 20.9902111,
+            longitude: 105.8452833,
+            latitudeDelta: 0.06,
+            longitudeDelta: 0.04,
+          }}>
+
+        </MapView>
       </View>
     )
     return content;
@@ -135,18 +151,18 @@ class HomeScreen extends Screen{
   componentDidMount(){
     super.componentDidMount();
     var {dispatch} = this.props;
-    dispatch(UserActions_MiddleWare.listService({
-      "memberToken":"ed740079-39e4-42ef-a6bf-aab92e93536b",
-      "region":"hn"
-    }))
-    .then((result) => {
-      this.setState({
-        listService:result.res.data
-      })
-    })
-    .catch((err)=> {
-      console.log('ahihi err',result);
-    })
+    // dispatch(UserActions_MiddleWare.listService({
+    //   "memberToken":"ed740079-39e4-42ef-a6bf-aab92e93536b",
+    //   "region":"hn"
+    // }))
+    // .then((result) => {
+    //   this.setState({
+    //     listService:result.res.data
+    //   })
+    // })
+    // .catch((err)=> {
+    //   console.log('ahihi err',result);
+    // })
   }
 }
 
