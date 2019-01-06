@@ -56,7 +56,7 @@ var Define = {
     X : (widthScreen<heightScreen? widthScreen : heightScreen)/ ((screenSizeByInch<7)?9.25:12) ,
 
     // serverAddr :'http://sctvserver.ddns.net', // http://123.30.235.201:9697  //
-    serverAddr :'https://api.sanship.vn',  // production // http://123.30.235.63:9696/
+    serverAddr :'http://192.168.0.101:1996',  // production // http://123.30.235.63:9696/
     // serverAddr:'http://123.30.235.201:34746',
     // serverAddr :'http://192.168.3.151:8080',
     proxyAddr: 'http://proxy.sanship.info/config',
