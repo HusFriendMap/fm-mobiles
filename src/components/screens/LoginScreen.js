@@ -187,18 +187,6 @@ class LoginScreen extends Screen{
       StatusBarAndroid.setHexColor('#000105');
     }
     //dispatch(AppStateActions_MiddleWare.getConfigForUseApp())
-    console.log('ahihiU',user);
-    if (user.memberInfo.data && user.memberInfo.data.memberToken && user.memberInfo.data.memberToken.length>0) {
-      console.log('sucessfully');
-      dispatch(UserActions_MiddleWare.get())
-      .then((info)=>{
-          let screenName = 'ContainerScreen';
-          Actions[screenName]({
-            type: 'reset'
-          });
-      })
-
-    }
   }
   componentWillUnmount(){
     if(Platform.OS === 'android'){

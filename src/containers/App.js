@@ -18,7 +18,6 @@ import {
   UIManager,
   StyleSheet,
   ActivityIndicator,
-  BackAndroid
 } from 'react-native';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -44,6 +43,7 @@ var RNHotUpdate = NativeModules.RNHotUpdate;
 var DeviceInfo = require('react-native-device-info');
 
 var RNFS = require('react-native-fs');
+import {Icon} from 'native-base'
 
 
 // action
@@ -76,6 +76,7 @@ import TemplateScreen from '../components/screens/TemplateScreen'
 import ContainerScreen from '../components/screens/ContainerScreen'
 import PickCardTypeScreen from '../components/screens/PickCardTypeScreen'
 import PickCardPriceScreen from '../components/screens/PickCardPriceScreen'
+import DetailPlaceScreen from '../components/screens/DetailPlaceScreen'
 
 var screenList=[
   HomeScreen,
@@ -83,7 +84,8 @@ var screenList=[
   SecondScreen,
   ContainerScreen,
   PickCardTypeScreen,
-  PickCardPriceScreen
+  PickCardPriceScreen,
+  DetailPlaceScreen,
 ];
 //popups
 import DefaultPopup from '../components/popups/DefaultPopup'
@@ -163,24 +165,21 @@ var App = React.createClass({
   },
   screenList:[],
   defaultLeftButton() {
+    const {navigator} = this.props;
     return (
-      <ButtonWrap onPress={()=>{globalVariableManager.rootView.drawSideMenu(true)}}>
+      <ButtonWrap
+        onPress={()=>{
+          Actions.pop();
+        }}>
         <View style={Themes.current.screen.leftButtonWrapNavBar}>
-            <Icon name='ios-menu' style={{fontSize: 32, lineHeight: 36, color: '#fff',marginRight:6}} />
-            <NewTag tagName={'sideMenuButton'}/>
+            <Icon name='md-arrow-back' style={{fontSize: 27, lineHeight: 36, color: '#fff',marginRight:6}} />
         </View>
       </ButtonWrap>
-
     )
   },
   defaultRightButton() {
     return (
       <View style={Themes.current.screen.rightButtonWrapNavBar}>
-        <ButtonWrap onPress={()=>{
-          popupActions.setRenderContentAndShow(NotifyPopup);
-        }}>
-          <Icon name='ios-notifications' style={{fontSize: 27, lineHeight: 36, color: '#fff'}} />
-        </ButtonWrap>
       </View>
     )
   },
@@ -190,6 +189,12 @@ var App = React.createClass({
       var currentTemp = current;
       if (current.WrappedComponent) {
         currentTemp = current.WrappedComponent;
+      }
+      if(!currentTemp.renderBackButton) {
+        currentTemp.renderBackButton = self.defaultLeftButton;
+      }
+      if(!currentTemp.renderRightButton) {
+        currentTemp.renderRightButton = self.defaultRightButton;
       }
       return(
         <Scene
@@ -207,7 +212,7 @@ var App = React.createClass({
           onBack={() => {
             Actions.pop()
           }}
-          backButtonTextStyle = {{resizeMode: 'stretch', height: 19, top: -4}}
+          backButtonTextStyle = {{ height: 19, top: -4}}
           bodyStyle={Themes.current.screen.bodyViewWrap}
           rootView={self}
         />
@@ -483,7 +488,7 @@ var App = React.createClass({
       // }
     });
     //key
-    BackAndroid.addEventListener('hardwareBackPress',
+    BackHandler.addEventListener('hardwareBackPress',
        () => {
          // must update
          appState = self.props.appState;
@@ -671,7 +676,8 @@ var App = React.createClass({
           disableGestures={self.isDisableSideMenu()}
           menu={self.renderSideMenu()}>
         <RouterWithRedux
-          backAndroidHandler={()=>{}}
+          BackHandlerHandler={()=>{}}
+          duration={400}
           sceneStyle={Themes.current.screen.appBackground}
           navigationBarStyle={Themes.current.screen.NavBar} >
           <Scene key="root">

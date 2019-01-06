@@ -15,7 +15,7 @@ var heightScreen = Dimensions.get('window').height;
 var screenSizeByInch = Math.sqrt(Math.pow(widthScreen,2) + Math.pow(heightScreen,2))  / (PixelRatio.get()*160) * 2;
 
 var assets={
-  Home_screen:{
+  Home:{
     home_icon_menu : require('../assets/Home/home_icon_menu.png'),
   },
   Menu:{
@@ -31,7 +31,7 @@ var mapAssets={
 
 
 var Define = {
-  assets: (__DEV__)? assets:PlatformConfig.default.processAsset(assets,mapAssets),
+  assets: (__DEV__ || Platform.OS === 'ios')? assets:PlatformConfig.default.processAsset(assets,mapAssets),
   constants:{
     hybridVersion: PlatformConfig.default.hybridVersion,
     heightOfStatusBarAndroid : 0,
@@ -52,7 +52,7 @@ var Define = {
 
     fontScale : Math.floor(4/PixelRatio.getFontScale()),
 
-    navBarHeight: PlatformConfig.default.navBarHeight,
+    navBarHeight: Platform.OS === 'android' ? PlatformConfig.default.navBarHeight+15 : PlatformConfig.default.navBarHeight,
     X : (widthScreen<heightScreen? widthScreen : heightScreen)/ ((screenSizeByInch<7)?9.25:12) ,
 
     // serverAddr :'http://sctvserver.ddns.net', // http://123.30.235.201:9697  //

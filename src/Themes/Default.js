@@ -154,10 +154,10 @@ var Default ={
   text:{
     defaultText:{
       color:'#303030',
-      fontSize:14,
+      fontSize:15,
     },
     normal:{
-      fontSize:14,
+      fontSize:15,
     },
     input: {
         flex:1,
@@ -342,12 +342,12 @@ var Default ={
       margin:2
     },
   },
-  linearConfig: {
-    start: {x: 0, y: 0},
-    end: {x: 1, y: 0},
-    colors: ['#01cca1', '#1795b5'],
-    style: {flex: 1}
-  },
+  // linearConfig: {
+  //   start: {x: 0, y: 0},
+  //   end: {x: 1, y: 0},
+  //   colors: ['#01cca1', '#1795b5'],
+  //   style: {flex: 1}
+  // },
   factor:{
     shadownStyle:StyleConfig.default.shadownStyle,
     openSideMenuOffset:X*7.36,
