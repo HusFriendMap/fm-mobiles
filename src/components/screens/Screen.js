@@ -81,7 +81,7 @@ class Screen extends ReactComponent{
           {Platform.OS === 'android'?
             <StatusBar
               translucent={true}
-              backgroundColor="rgba(0, 0, 0, 0)"
+              backgroundColor="rgba(0, 0, 0, 0.4)"
             />
           :null}
         </View>
@@ -89,19 +89,15 @@ class Screen extends ReactComponent{
     }
     else{
       if (_.isFunction(this.renderScreenContent) ) {
-        if(this.constructor.componentName === 'FeedsScreenContainer' || Platform.OS === 'ios') {
-          content = this.renderScreenContent();
-        } else {
-          content = (
-            <View style={{flex:1}}>
-              <StatusBar
-                translucent={true}
-                backgroundColor="rgba(0, 0, 0, 0)"
-              />
-              {this.renderScreenContent()}
-            </View>
-          );
-        }
+        content = (
+          <View style={{flex:1}}>
+            <StatusBar
+              translucent={true}
+              backgroundColor="rgba(0, 0, 0, 0.4)"
+            />
+            {this.renderScreenContent()}
+          </View>
+        );
       }else{
         Debug.log(this.constructor.componentName+':no renderScreenContent',Debug.level.ERROR)
         content = null;

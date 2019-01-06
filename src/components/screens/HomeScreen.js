@@ -38,6 +38,7 @@ import PickCardTypeScreen from './PickCardTypeScreen'
 // popups
 import DefaultPopup from '../popups/DefaultPopup'
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
+import AntIcon from 'react-native-vector-icons/AntDesign';
 
 // actions
 
@@ -62,7 +63,7 @@ class HomeScreen extends Screen{
       listPlaces:[],
       slideIndex:0
     })
-    this.renderListService = this.renderListService.bind(this);
+    this._renderItem = this._renderItem.bind(this);
   }
   // static renderRightButton(scene){
   //   return (
@@ -95,22 +96,6 @@ class HomeScreen extends Screen{
     super.onGetMore();
     var {dispatch} = this.props;
   }
-  renderListService(service) {
-    return(
-      <ButtonWrap
-        onPress={() => {
-          if(service._id==="5ae982b8717365072fb43faa") {
-              Actions.PickCardTypeScreen();
-          }
-        }}
-      >
-        <View style={{margin: 5, height:Define.constants.widthScreen/4.5+30, backgroundColor:'#ffffff', elevation:3, padding: 10, alignItems:'center'}}>
-          <Image style={{width: Define.constants.widthScreen/4.5, height: Define.constants.widthScreen/4.5, borderRadius: 5}} source={{uri:service.icon}} />
-          <Include.Text>{service.name}</Include.Text>
-        </View>
-      </ButtonWrap>
-    )
-  }
   renderScreenContent(){
     var {dispatch} = this.props;
     var content = null;
@@ -121,8 +106,7 @@ class HomeScreen extends Screen{
             this._mapView = ref;
           }}
           style={{
-            flex: 1,
-            zIndex: 1
+            flex: 1
           }}
           provider={MapView.PROVIDER_GOOGLE}
           showsMyLocationButton={false}
@@ -142,9 +126,10 @@ class HomeScreen extends Screen{
             latitudeDelta: 0.02,
             longitudeDelta: 0.01,
           }}>
-          {this.state.listPlaces.map((place) => {
+          {this.state.listPlaces.map((place,index) => {
               return(
                 <MapView.Marker
+                  key={`place_marker${index}`}
                   coordinate={{
                     latitude: place.location.lat,
                     longitude: place.location.lng
@@ -153,6 +138,14 @@ class HomeScreen extends Screen{
               )
            })}
         </MapView>
+        <View style={{position:'absolute', top:18, left:3}}>
+          <ButtonWrap
+            onPress={() => {
+              globalVariableManager.rootView.drawSideMenu(true)
+            }}>
+            <AntIcon name='menufold' style={{ fontSize: 32, marginTop: 0, marginLeft: 5, lineHeight: 36, backgroundColor: 'transparent', color: '#000' }} />
+          </ButtonWrap>
+        </View>
         <View style={{
               width: Define.constants.widthScreen,
               height: Define.constants.widthScreen/2+20,
@@ -192,10 +185,23 @@ class HomeScreen extends Screen{
   }
   _renderItem ({item, index}, parallaxProps) {
     return (
+      <ButtonWrap
+        onPress = {() => {
+          this.props.dispatch(UserActions_MiddleWare.placeDetail({
+            placeId: item.place_id
+          }))
+          .then((result) => {
+            Actions.DetailPlaceScreen({
+              data: result.res.data,
+              avartar: item.photo ? item.photo : item.defaultPhoto
+            })
+          })
+        }}
+      >
         <View style={{backgroundColor:'#fff', elevation:10, borderRadius:6, alignItems:'center',padding:3, width:Define.constants.widthScreen/2+10, height:Define.constants.widthScreen/2}}>
             <ParallaxImage
                 resizeMode={'stretch'}
-                source={{ uri:item.photo ? item.photo : `http://www.wijchensnieuws.nl/wp-content/uploads/2015/10/school.gif`}}
+                source={{ uri:item.photo ? item.photo : item.defaultPhoto}}
                 containerStyle={{ width:'100%', height:120, borderRadius:4}}
                 style={{resizeMode:'center', borderRadius:4}}
                 parallaxFactor={0.4}
@@ -211,6 +217,7 @@ class HomeScreen extends Screen{
             </View>
 
         </View>
+      </ButtonWrap>
     );
 }
   componentDidMount(){

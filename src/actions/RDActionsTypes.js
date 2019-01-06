@@ -45,7 +45,8 @@ const RDActionsTypes={
     listService: 'USER_LIST_SERVICE',
     listCard:'USER_LIST_CARD',
     getCard:'USER_GET_CARD',
-    placesSearch:'USER_SEARCH_PLACES'
+    placesSearch:'USER_SEARCH_PLACES',
+    placeDetail:'USER_SEARCH_PLACE_DETAIL'
   },
   AppSetting:{
     setMode: 'APP_SET_MODE',
