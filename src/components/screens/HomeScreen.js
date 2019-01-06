@@ -37,6 +37,7 @@ import PickCardTypeScreen from './PickCardTypeScreen'
 
 // popups
 import DefaultPopup from '../popups/DefaultPopup'
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 
 // actions
 
@@ -58,7 +59,8 @@ class HomeScreen extends Screen{
   constructor(props){
     super(props);
     this.state = _.merge(this.state,{
-      listService:[]
+      listPlaces:[],
+      slideIndex:0
     })
     this.renderListService = this.renderListService.bind(this);
   }
@@ -133,36 +135,98 @@ class HomeScreen extends Screen{
           showsTraffic={false}
           showsIndoors={false}
           cacheEnabled={false}
-          zoomEnabled={false}
-          scrollEnabled={false}
           loadingEnabled={true}
           initialRegion={{
             latitude: 20.9902111,
             longitude: 105.8452833,
-            latitudeDelta: 0.06,
-            longitudeDelta: 0.04,
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.01,
           }}>
-
+          {this.state.listPlaces.map((place) => {
+              return(
+                <MapView.Marker
+                  coordinate={{
+                    latitude: place.location.lat,
+                    longitude: place.location.lng
+                  }}>
+                </MapView.Marker>
+              )
+           })}
         </MapView>
+        <View style={{
+              width: Define.constants.widthScreen,
+              height: Define.constants.widthScreen/2+20,
+              backgroundColor: 'transparent',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              padding: 10,
+              elevation: 5,
+              bottom:0,
+              right:0,
+              left:0
+            }}>
+        <Carousel
+               data={this.state.listPlaces}
+               renderItem={this._renderItem}
+               hasParallaxImages={true}
+               itemWidth={Define.constants.widthScreen*0.6}
+               sliderWidth={Define.constants.widthScreen}
+               onSnapToItem = {(slideIndex) =>{
+                  this.setState({
+                   slideIndex
+                  });
+                  const region = {
+                    latitude: this.state.listPlaces[slideIndex].location.lat,
+                    longitude: this.state.listPlaces[slideIndex].location.lng,
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.005,
+                  }
+                  this._mapView && this._mapView.animateToRegion(region, 200)
+               }}
+           />
+      </View>
       </View>
     )
     return content;
   }
+  _renderItem ({item, index}, parallaxProps) {
+    return (
+        <View style={{backgroundColor:'#fff', elevation:10, borderRadius:6, alignItems:'center',padding:3, width:Define.constants.widthScreen/2+10, height:Define.constants.widthScreen/2}}>
+            <ParallaxImage
+                resizeMode={'stretch'}
+                source={{ uri:item.photo ? item.photo : `http://www.wijchensnieuws.nl/wp-content/uploads/2015/10/school.gif`}}
+                containerStyle={{ width:'100%', height:120, borderRadius:4}}
+                style={{resizeMode:'center', borderRadius:4}}
+                parallaxFactor={0.4}
+                {...parallaxProps}
+            />
+            <View>
+              <Text style={{textAlign:'center', fontSize:14, fontWeight:'bold'}} numberOfLines={1}>
+                      { item.name }
+              </Text>
+              <Text style={{textAlign:'center'}} numberOfLines={2}>
+                      { item.address }
+              </Text>
+            </View>
+
+        </View>
+    );
+}
   componentDidMount(){
     super.componentDidMount();
     var {dispatch} = this.props;
-    // dispatch(UserActions_MiddleWare.listService({
-    //   "memberToken":"ed740079-39e4-42ef-a6bf-aab92e93536b",
-    //   "region":"hn"
-    // }))
-    // .then((result) => {
-    //   this.setState({
-    //     listService:result.res.data
-    //   })
-    // })
-    // .catch((err)=> {
-    //   console.log('ahihi err',result);
-    // })
+    dispatch(UserActions_MiddleWare.placesSearch({
+      "type":"school"
+    }))
+    .then((result) => {
+      this.setState({
+        listPlaces:result.res.data
+      })
+    })
+    .catch((err)=> {
+      console.log('ahihi err',result);
+    })
   }
 }
 
