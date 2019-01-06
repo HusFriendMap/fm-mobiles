@@ -141,6 +141,23 @@ var {globalVariableManager}= require('../components/modules/GlobalVariableManage
         return true
       },
     },
+    placeDetail:{
+      query:'/google/place-detail',
+      argFormat:{},
+      argMap:{},
+      apiVersion:1.0,
+      limitProcess:1,
+      showLoading:true,
+      onArg:(arg,getState)=>{
+        return {
+          ...arg
+        };
+      },
+      onError:undefined, // (dispatch,getState,data)=>{return true},
+      onDone:(dispatch,getState,data)=>{
+        return true
+      },
+    },
    }
    loginFacebook(arg:Object={},setState:boolean = true){
     var self = this;
