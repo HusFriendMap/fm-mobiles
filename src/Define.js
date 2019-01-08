@@ -23,6 +23,34 @@ var assets={
   },
   Images:{
     backgroundLogin: require('../assets/Images/backgroundLogin.png'),
+    atm: require('../assets/Images/atm.png'),
+    atm_map: require('../assets/Images/atm_map.png'),
+    bank: require('../assets/Images/bank.png'),
+    bank_map: require('../assets/Images/bank_map.png'),
+    bus_station: require('../assets/Images/bus_station.png'),
+    bus_station_map: require('../assets/Images/bus_station_map.png'),
+    cafe: require('../assets/Images/cafe.png'),
+    cafe_map: require('../assets/Images/cafe_map.png'),
+    clothing_store: require('../assets/Images/clothing_store.png'),
+    clothing_store_map: require('../assets/Images/clothing_store_map.png'),
+    hair_care: require('../assets/Images/hair_care.png'),
+    hair_care_map: require('../assets/Images/hair_care_map.png'),
+    hospital: require('../assets/Images/hospital.png'),
+    hospital_map: require('../assets/Images/hospital_map.png'),
+    park: require('../assets/Images/park.png'),
+    park_map: require('../assets/Images/park_map.png'),
+    pet_store: require('../assets/Images/pet_store.png'),
+    pet_store_map: require('../assets/Images/pet_store_map.png'),
+    pharmacy: require('../assets/Images/pharmacy.png'),
+    pharmacy_map: require('../assets/Images/pharmacy_map.png'),
+    restaurant: require('../assets/Images/restaurant.png'),
+    restaurant_map: require('../assets/Images/restaurant_map.png'),
+    school: require('../assets/Images/school.png'),
+    school_map: require('../assets/Images/school_map.png'),
+    shopping_mall: require('../assets/Images/shopping_mall.png'),
+    shopping_mall_map: require('../assets/Images/shopping_mall_map.png'),
+    gas_station: require('../assets/Images/gas_station.png'),
+    gas_station_map: require('../assets/Images/gas_station_map.png'),
   },
 }
 
@@ -56,7 +84,7 @@ var Define = {
     X : (widthScreen<heightScreen? widthScreen : heightScreen)/ ((screenSizeByInch<7)?9.25:12) ,
 
     // serverAddr :'http://sctvserver.ddns.net', // http://123.30.235.201:9697  //
-    serverAddr :'http://192.168.0.101:1996',  // production // http://123.30.235.63:9696/
+    serverAddr :'http://192.168.0.106:1996',  // production // http://123.30.235.63:9696/
     // serverAddr:'http://123.30.235.201:34746',
     // serverAddr :'http://192.168.3.151:8080',
     proxyAddr: 'http://proxy.sanship.info/config',
