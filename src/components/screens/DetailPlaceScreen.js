@@ -37,7 +37,7 @@ import DefaultPopup from '../popups/DefaultPopup';
 // actions
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
@@ -196,7 +196,7 @@ class DetailPlaceScreen extends Screen{
               mapGuideManager.hintPlace(data.location.lat, data.location.lng);
             }}
             style={{flexDirection:'column', marginTop:5,width:95,height:60, elevation:3,backgroundColor:'#fff', paddingVertical:10,borderRadius:4, alignItems:'center', justifyContent:'center'}}>
-            <Entypo name={'forward'} style={{fontSize:16, color:'#0652DD'}}/>
+            <FontAwesome5 name={'directions'} style={{fontSize:16, color:'#0652DD'}}/>
             <Include.Text>Chỉ đường</Include.Text>
           </TouchableOpacity>
         </View>

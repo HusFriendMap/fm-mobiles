@@ -42,11 +42,10 @@ const RDActionsTypes={
     logout: 'USER_LOGOUT',
     loginFacebook: 'USER_LOGIN_FACEBOOK',
     get: 'USER_GET',
-    listService: 'USER_LIST_SERVICE',
-    listCard:'USER_LIST_CARD',
-    getCard:'USER_GET_CARD',
     placesSearch:'USER_SEARCH_PLACES',
-    placeDetail:'USER_SEARCH_PLACE_DETAIL'
+    placeDetail:'USER_SEARCH_PLACE_DETAIL',
+    listAvailableService:'USER_LIST_SERVICE',
+    getLocationName:'USER_GET_LOCATION_NAME'
   },
   AppSetting:{
     setMode: 'APP_SET_MODE',
