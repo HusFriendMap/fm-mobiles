@@ -117,7 +117,7 @@ class Screen extends ReactComponent{
     super.componentWillMount();
     if(Platform.OS === 'android') {
       StatusBar.setTranslucent(true);
-      StatusBar.setBackgroundColor('rgba(0, 0, 0, 0)')
+      StatusBar.setBackgroundColor('rgba(0, 0, 0, 0.4)')
     }
   }
 

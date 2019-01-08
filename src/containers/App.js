@@ -77,6 +77,7 @@ import ContainerScreen from '../components/screens/ContainerScreen'
 import PickCardTypeScreen from '../components/screens/PickCardTypeScreen'
 import PickCardPriceScreen from '../components/screens/PickCardPriceScreen'
 import DetailPlaceScreen from '../components/screens/DetailPlaceScreen'
+import PickLocationScreen from '../components/screens/PickLocationScreen'
 
 var screenList=[
   HomeScreen,
@@ -86,6 +87,7 @@ var screenList=[
   PickCardTypeScreen,
   PickCardPriceScreen,
   DetailPlaceScreen,
+  PickLocationScreen
 ];
 //popups
 import DefaultPopup from '../components/popups/DefaultPopup'

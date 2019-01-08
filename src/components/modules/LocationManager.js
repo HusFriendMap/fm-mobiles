@@ -28,7 +28,7 @@ class LocationManager extends EventEmitter {
           if (ret) {
             return Promise.resolve(true);
           }else{
-            return PermissionsAndroid.requestPermission(
+            return PermissionsAndroid.request(
               PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
               {
                 'title': 'Xin hãy cho chúng tôi biết vị trí của bạn',
