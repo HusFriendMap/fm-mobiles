@@ -27,6 +27,7 @@ var {globalVariableManager}= require('../modules/GlobalVariableManager');
 var {mapGuideManager} = require('../modules/MapGuideManager');
 
 var ButtonWrap = require('../elements/ButtonWrap');
+import UserActions_MiddleWare from '../../actions/UserActions_MiddleWare'
 
 //screens
 import Screen from './Screen'
@@ -39,6 +40,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import StarRating from 'react-native-star-rating';
 
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 
@@ -64,7 +66,9 @@ class DetailPlaceScreen extends Screen{
   constructor(props){
     super(props);
     this.state = _.merge(this.state,
-    {})
+    {
+      hasLoved: this.props.data.hasLoved || false
+    })
     this._renderItem = this._renderItem.bind(this);
   }
 
@@ -119,14 +123,9 @@ class DetailPlaceScreen extends Screen{
     );
   }
   renderScreenContent(){
-    var {dispatch} = this.props;
+    const {dispatch, user, data} = this.props;
     var content = null;
-    const {data} = this.props;
     const rating = data.rating ? data.rating : 5;
-    let ratings = []
-    for (let i = 0; i < rating; i++) {
-      ratings.push(1);
-    }
     content =(
       <Include.ScrollView
         style={[Themes.current.screen.bodyView,this.props.bodyStyle],{ marginTop:70, backgroundColor:'#fff'}}
@@ -135,15 +134,27 @@ class DetailPlaceScreen extends Screen{
         onGetMore={this.onGetMore}
       >
         <View style={{elevation:3,flexDirection:'row', backgroundColor:'#FFF', padding:10, marginBottom:10}}>
-          <Image style={{width: 60, height: 60, borderRadius: 30}} source={{uri: this.props.avartar}} />
+          <Image style={{width: 60, height: 60, borderRadius: 30}} source={ this.props.avartar ? {uri: this.props.avartar} : Define.assets.Images.defaultSlider} />
           <View style={{flex:1, flexDirection:'column'}}>
             <Include.Text style={{marginLeft:10, fontWeight:'bold'}}>{data.name}</Include.Text>
-            <View style={{marginLeft:10, flexDirection:'row', marginTop:3}}>
-              {ratings.map(() => {
-                return(
-                  <AntIcon name={'star'} style={{fontSize:16, color:'#EE7F19'}}/>
-                )
-              })}
+            <View style={{ flexDirection:'row'}}>
+              <StarRating
+                containerStyle={{alignSelf:'flex-start', marginLeft:5, paddingRight:3}}
+                buttonStyle={{ paddingHorizontal: 3 }}
+                starStyle={{backgroundColor: 'transparent'}}
+                disabled={true}
+                maxStars={5}
+                starSize={20}
+                halfStarEnabled={true}
+                halfStar='md-star-half'
+                halfStarColor={'#EE7F19'}
+                emptyStar='md-star-outline'
+                fullStar='md-star'
+                iconSet={'Ionicons'}
+                rating={rating}
+                fullStarColor={'#EE7F19'}
+              />
+              <Include.Text>({rating})</Include.Text>
             </View>
             <View style={{marginLeft:10, flexDirection:'row', marginTop:3}}>
               <AntIcon name={'enviromento'} style={{ fontSize:16, color:'#000', marginTop:2}}/>
@@ -163,8 +174,49 @@ class DetailPlaceScreen extends Screen{
              />
         :null}
         <View style={{flexDirection:'row', paddingBottom:10, marginHorizontal:10, paddingHorizontal:5, flex:1, alignItems:'center',backgroundColor:'#fff', borderRadius:4,justifyContent:'space-between', marginTop:10}}>
-          <TouchableOpacity style={{flexDirection:'column', marginTop:5, borderRadius:4, elevation:3, width:95, height:60, paddingVertical:10,backgroundColor:'#fff', alignItems:'center', justifyContent:'center'}}>
-            <AntIcon name={'hearto'} style={{fontSize:16, color:'#000'}}/>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('ahihi',this.state.hasLoved);
+              if(!this.state.hasLoved) {
+                if(user.memberInfo && user.memberInfo.member) {
+                  dispatch(UserActions_MiddleWare.addFavorite({
+                    _id: user.memberInfo.member._id,
+                    placeId: data.place_id,
+                    photo: this.props.avartar || '',
+                    name: data.name,
+                    address: data.address,
+                    rating
+                  }))
+                  .then((result) => {
+                    this.setState({
+                      hasLoved: true
+                    })
+                  })
+                } else {
+                  Actions.LoginScreen({
+                    mode:'login'
+                  })
+                }
+              } else {
+                if(user.memberInfo && user.memberInfo.member) {
+                  dispatch(UserActions_MiddleWare.removeFavorite({
+                    _id: user.memberInfo.member._id,
+                    placeId: data.place_id,
+                  }))
+                  .then((result) => {
+                    this.setState({
+                      hasLoved: false
+                    })
+                  })
+                } else {
+                  Actions.LoginScreen({
+                    mode:'login'
+                  })
+                }
+              }
+            }}
+            style={{flexDirection:'column', marginTop:5, borderRadius:4, elevation:3, width:95, height:60, paddingVertical:10,backgroundColor:'#fff', alignItems:'center', justifyContent:'center'}}>
+            <AntIcon name={'heart'} style={{fontSize:16, color:this.state.hasLoved ? '#FD0000' : '#000'}}/>
             <Include.Text>Yêu thích</Include.Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -256,7 +308,8 @@ class DetailPlaceScreen extends Screen{
  */
 function selectActions(state) {
   return {
-    navigator: state.Navigator
+    navigator: state.Navigator,
+    user: state.User
   }
 }
 

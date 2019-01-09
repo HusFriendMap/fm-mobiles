@@ -156,8 +156,12 @@ var MyListView = React.createClass({
     })
 
     var listViewPropsList=[
+      'renderHeader',
       'renderFooter',
-      'initialListSize'
+      'initialListSize',
+      'renderScrollComponent',
+      'onEndReachedThreshold',
+      'onEndReached'
     ]
 
     var listViewProps={
@@ -179,7 +183,7 @@ var MyListView = React.createClass({
         contentContainerStyle={self.props.containerStyle}
         dataSource={self.state.ds}
         renderRow={self.props.renderRow?self.props.renderRow: self._renderRow}
-        pageSize={6}
+        pageSize={8}
         scrollRenderAheadDistance={660}
         removeClippedSubviews={self.props.removeClippedSubviews !== undefined ? self.props.removeClippedSubviews :  true}
       />

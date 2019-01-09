@@ -30,6 +30,8 @@ var ButtonWrap = require('../elements/ButtonWrap');
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 import HomeScreen from './HomeScreen';
 import SecondScreen from './SecondScreen';
+import AccountScreen from './AccountScreen';
+import FavoriteScreen from './FavoriteScreen';
 import BottomTabBar from './BottomTabBar';
 
 //screens
@@ -61,6 +63,7 @@ class ContainerScreen extends Screen{
     this.state = _.merge(this.state,
     {})
     this.pages=[];
+    this.scrollToTab = this.scrollToTab.bind(this);
   }
 
   // static renderLeftButton(scene){
@@ -96,7 +99,7 @@ class ContainerScreen extends Screen{
     var {dispatch} = this.props;
   }
   renderScreenContent(){
-    var {dispatch} = this.props;
+    var {dispatch, user} = this.props;
     var content = null;
     content =(
       <ScrollableTabView
@@ -104,6 +107,7 @@ class ContainerScreen extends Screen{
       initialPage={0}
       tabBarPosition={'bottom'}
       scrollWithoutAnimation={true}
+      ref={ref => this._scrollTabview = ref}
       onChangeTab={(tab) => {
         if(this.tabFocus !== tab.i) {
           this.tabFocus = tab.i;
@@ -111,6 +115,12 @@ class ContainerScreen extends Screen{
           InteractionManager.runAfterInteractions(() => {
             this.pages[tab.i].getWrappedInstance().forceUpdate();
           });
+        }
+        if(tab.i !== 0 && !user.memberInfo.member) {
+          Actions.LoginScreen();
+          setTimeout(() => {
+            this._scrollTabview.goToPage(0);
+          }, 500);
         }
       }}
       renderTabBar={() => <BottomTabBar />}
@@ -121,7 +131,7 @@ class ContainerScreen extends Screen{
         tabIndex = {0}
         tabView={this}
         />
-      <SecondScreen
+      <FavoriteScreen
         ref={ref => this.pages[1] = ref}
         tabLabel={"Yêu thích"}
         tabIndex = {1}
@@ -130,21 +140,28 @@ class ContainerScreen extends Screen{
       <SecondScreen
         ref={ref => this.pages[2] = ref}
         tabLabel={"Đóng góp"}
-        tabIndex = {1}
+        tabIndex = {2}
         tabView={this}
       />
-      <SecondScreen
+      <AccountScreen
         ref={ref => this.pages[3] = ref}
         tabLabel={"Tài khoản"}
-        tabIndex = {1}
+        tabIndex = {3}
         tabView={this}
+        scrollToTab={this.scrollToTab}
       />
     </ScrollableTabView>
     )
     return content;
   }
+  scrollToTab(index) {
+    this._scrollTabview.goToPage(index);
+  }
   componentDidMount(){
     super.componentDidMount();
+    // setTimeout(() => {
+    //   this._scrollTabview.goToPage(3);
+    // }, 500);
   }
 }
 const styles = StyleSheet.create({
@@ -174,6 +191,7 @@ const styles = StyleSheet.create({
 function selectActions(state) {
   return {
     navigator: state.Navigator,
+    user: state.User
   }
 }
 
