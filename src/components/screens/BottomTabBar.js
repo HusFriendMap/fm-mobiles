@@ -60,7 +60,7 @@ class BottomTabBar extends React.Component {
     return `rgb(${red}, ${green}, ${blue})`;
   }
   render() {
-    return <View style={[styles.tabs, this.props.style, ], {flexDirection:'row'}}>
+    return <View style={[styles.tabs, this.props.style, ], {flexDirection:'row', elevation:10, backgroundColor:'#fff'}}>
       {this.props.tabs.map((tab, i) => {
         return <TouchableOpacity key={tab} onPress={() => this.props.goToPage(i)} style={styles.tab}>
           <View
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
   },
   tabs: {
     height: 45,
-    elevation:1,
     shadowColor:'#000000',
     shadowOpacity:0.5,
     shadowOffset:{height:-1, width:0},

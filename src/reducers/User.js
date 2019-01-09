@@ -20,17 +20,16 @@ function initLoading(){
 }
 
 var memberInfoFormat={
-  data: {
+  member: {
     _id:'',
-    facebook:{
-      name:'',
-      birthday:'',
-      picture:'',
-      email:'',
-    },
-
+    phone:'',
+    address:'',
+    status:0,
+    name:'',
+    email:'',
+    createdAt:'',
+    updatedAt:'',
     memberToken:'',
-    active:0,
   }
 }
 
@@ -44,7 +43,7 @@ function User(state ={
       stateTemp = RDUtil.processReducerLoading(state,action,'login',
                 {
                   onSuccess:(stateTempIn)=>{
-                    stateTempIn.memberInfo = Util.dataProtectAndMap(action.data.res,memberInfoFormat)
+                    stateTempIn.memberInfo = Util.dataProtectAndMap(action.data.res.data,memberInfoFormat)
                     //console.log('hihi',stateTempIn);
                     return stateTempIn;
                   },
@@ -61,7 +60,7 @@ function User(state ={
       stateTemp = RDUtil.processReducerLoading(state,action,'get',
                 {
                   onSuccess:(stateTempIn)=>{
-                    stateTempIn.memberInfo = Util.dataProtectAndMap(action.data.res,memberInfoFormat)
+                    stateTempIn.memberInfo = Util.dataProtectAndMap(action.data.res.data,memberInfoFormat)
                     return stateTempIn;
                   },
                   onError: (stateTempIn) => {

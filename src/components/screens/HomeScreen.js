@@ -65,7 +65,7 @@ class HomeScreen extends Screen{
       listPlaces:[],
       slideIndex:0,
       renderServices:false,
-      currentService:'school',
+      currentService:'',
       locationName:''
     })
     this._renderItem = this._renderItem.bind(this);
@@ -225,7 +225,7 @@ class HomeScreen extends Screen{
                 return(
                   <MapView.Marker
                     key={`place_marker${index}`}
-                    image = {Define.assets.Images[iconMarker]}
+                    image = {this.state.currentService === '' ? Define.assets.Images.pin :Define.assets.Images[iconMarker]}
                     style={{
                       width: 10,
                       height: 10
@@ -310,8 +310,8 @@ class HomeScreen extends Screen{
                     const region = {
                       latitude: this.state.listPlaces[slideIndex].location.lat,
                       longitude: this.state.listPlaces[slideIndex].location.lng,
-                      latitudeDelta: 0.005,
-                      longitudeDelta: 0.005,
+                      latitudeDelta: this.state.currentService === '' ? 0.001 : 0.005,
+                      longitudeDelta: this.state.currentService === '' ? 0.001 : 0.005,
                     }
                     this._mapView && this._mapView.animateToRegion(region, 400)
                  }}
@@ -340,13 +340,18 @@ class HomeScreen extends Screen{
     return (
       <ButtonWrap
         onPress = {() => {
-          this.props.dispatch(UserActions_MiddleWare.placeDetail({
+          let objSend = {
             placeId: item.place_id
-          }))
+          }
+          if(this.props.user.memberInfo && this.props.user.memberInfo.member) {
+            objSend.userId = this.props.user.memberInfo.member._id
+          }
+
+          this.props.dispatch(UserActions_MiddleWare.placeDetail(objSend))
           .then((result) => {
             Actions.DetailPlaceScreen({
               data: result.res.data,
-              avartar: item.photo ? item.photo : item.defaultPhoto
+              avartar: item.photo,
             })
           })
         }}
@@ -354,7 +359,7 @@ class HomeScreen extends Screen{
         <View style={{backgroundColor:'#fff', elevation:10, borderRadius:6, alignItems:'center',padding:3, width:Define.constants.widthScreen/2+10, height:Define.constants.widthScreen/2}}>
             <ParallaxImage
                 resizeMode={'stretch'}
-                source={{ uri:item.photo ? item.photo : item.defaultPhoto}}
+                source={item.photo ? { uri:item.photo } : Define.assets.Images.defaultSlider}
                 containerStyle={{ width:'100%', height:120, borderRadius:4}}
                 style={{resizeMode:'center', borderRadius:4}}
                 parallaxFactor={0.4}
@@ -380,8 +385,8 @@ class HomeScreen extends Screen{
         const region = {
           latitude: currentLocation.lat,
           longitude: currentLocation.lng,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.001,
         }
         this.setState({
           location: region
@@ -396,7 +401,6 @@ class HomeScreen extends Screen{
           })
         })
         dispatch(UserActions_MiddleWare.placesSearch({
-          "type":"school",
           location:[currentLocation.lat, currentLocation.lng]
         }))
         .then((result) => {
@@ -409,12 +413,11 @@ class HomeScreen extends Screen{
             location:{
               latitude: 20.9902111,
               longitude: 105.8452833,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
+              latitudeDelta: 0.001,
+              longitudeDelta: 0.001,
             }
           })
           dispatch(UserActions_MiddleWare.placesSearch({
-            "type":"school"
           }))
           .then((result) => {
             this.setState({
@@ -441,6 +444,7 @@ class HomeScreen extends Screen{
 function selectActions(state) {
   return {
     navigator: state.Navigator,
+    user: state.User
   }
 }
 
