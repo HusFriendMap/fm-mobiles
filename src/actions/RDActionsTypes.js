@@ -45,7 +45,12 @@ const RDActionsTypes={
     placesSearch:'USER_SEARCH_PLACES',
     placeDetail:'USER_SEARCH_PLACE_DETAIL',
     listAvailableService:'USER_LIST_SERVICE',
-    getLocationName:'USER_GET_LOCATION_NAME'
+    getLocationName:'USER_GET_LOCATION_NAME',
+    register:'USER_REGISTER',
+    update:'USER_UPDATE',
+    addFavorite:'USER_ADD_FAVORITE',
+    removeFavorite:'USER_REMOVE_FAVORITE',
+    listFavorite:'USER_LIST_FAVORITE'
   },
   AppSetting:{
     setMode: 'APP_SET_MODE',

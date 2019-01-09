@@ -51,6 +51,10 @@ var assets={
     shopping_mall_map: require('../assets/Images/shopping_mall_map.png'),
     gas_station: require('../assets/Images/gas_station.png'),
     gas_station_map: require('../assets/Images/gas_station_map.png'),
+    noAvt: require('../assets/Images/noAvt.png'),
+    defaultBackgroundImg: require('../assets/Images/defaultBackgroundImg.png'),
+    pin: require('../assets/Images/pin.png'),
+    defaultSlider: require('../assets/Images/defaultSlider.png'),
   },
 }
 
@@ -142,9 +146,9 @@ var Define = {
       })
     }
 
-    if (self.constants.debug) {
+    //if (self.constants.debug) {
       self.assets = assets;
-    }
+    //}
 
     var assetsContent={};
     if (Platform.OS === 'android') {

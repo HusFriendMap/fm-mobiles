@@ -45,11 +45,10 @@ var {globalVariableManager}= require('../components/modules/GlobalVariableManage
       argFormat:{},
       argMap:{},
       showLoading: true,
-      apiVersion:Define.constants.apiVersion,
       limitProcess:1,
       onArg:(arg,getState)=>{
         return {
-          access_token:arg.access_token
+          ...arg
         };
       },
       onError:undefined, // (dispatch,getState,data)=>{return true},
@@ -59,11 +58,9 @@ var {globalVariableManager}= require('../components/modules/GlobalVariableManage
       query:'/member/get',
       argFormat:{},
       argMap:{},
-      apiVersion:Define.constants.apiVersion,
       limitProcess:1,
       onArg:(arg,getState)=>{
         return {
-          memberToken: getState().User.memberInfo.data.memberToken,
           ...arg
         };
       },
@@ -177,6 +174,91 @@ var {globalVariableManager}= require('../components/modules/GlobalVariableManage
     },
     getLocationName:{
       query:'/google/get-location-name',
+      argFormat:{},
+      argMap:{},
+      apiVersion:1.0,
+      limitProcess:1,
+      showLoading:true,
+      onArg:(arg,getState)=>{
+        return {
+          ...arg
+        };
+      },
+      onError:undefined, // (dispatch,getState,data)=>{return true},
+      onDone:(dispatch,getState,data)=>{
+        return true
+      },
+    },
+    register:{
+      query:'/member/register',
+      argFormat:{},
+      argMap:{},
+      apiVersion:1.0,
+      limitProcess:1,
+      showLoading:true,
+      onArg:(arg,getState)=>{
+        return {
+          ...arg
+        };
+      },
+      onError:undefined, // (dispatch,getState,data)=>{return true},
+      onDone:(dispatch,getState,data)=>{
+        return true
+      },
+    },
+    update:{
+      query:'/member/update',
+      argFormat:{},
+      argMap:{},
+      apiVersion:1.0,
+      limitProcess:1,
+      showLoading:true,
+      onArg:(arg,getState)=>{
+        return {
+          ...arg
+        };
+      },
+      onError:undefined, // (dispatch,getState,data)=>{return true},
+      onDone:(dispatch,getState,data)=>{
+        return true
+      },
+    },
+    addFavorite:{
+      query:'/member/add-favorite-place',
+      argFormat:{},
+      argMap:{},
+      apiVersion:1.0,
+      limitProcess:1,
+      showLoading:true,
+      onArg:(arg,getState)=>{
+        return {
+          ...arg
+        };
+      },
+      onError:undefined, // (dispatch,getState,data)=>{return true},
+      onDone:(dispatch,getState,data)=>{
+        return true
+      },
+    },
+    removeFavorite:{
+      query:'/member/remove-favorite-place',
+      argFormat:{},
+      argMap:{},
+      apiVersion:1.0,
+      limitProcess:1,
+      showLoading:true,
+      onArg:(arg,getState)=>{
+        return {
+          ...arg
+        };
+      },
+      onError:undefined, // (dispatch,getState,data)=>{return true},
+      onDone:(dispatch,getState,data)=>{
+        return true
+      },
+    },
+    listFavorite:{
+      query:'/member/list-favorite-place',
       argFormat:{},
       argMap:{},
       apiVersion:1.0,
