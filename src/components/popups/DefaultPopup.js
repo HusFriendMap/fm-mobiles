@@ -61,12 +61,27 @@ class DefaultPopup extends Popup{
   renderPopupContent(){
     var self = this;
     const {disableClose,title,description,description2,buttonTitle,onPress,buttonTitle2,onPress2,onPressPopup} = self.props;
-
+    var descriptionText = null;
+    if(description) {
+      descriptionText =(
+        <View style={{width:'100%', borderBottomWidth:1, borderBottomColor:'#DCDEE1', padding:10}}>
+          <Include.Text style={{left:0,right:0,color:'#000',margin:5,alignSelf:'center',textAlign :'center'}}>{description}</Include.Text>
+        </View>
+      )
+    }
     var description2Text = null;
     if (description2) {
       description2Text= <Include.Text style={Themes.current.text.popupDescription}>{description2}</Include.Text>
     }
-
+    var titleComponent = null;
+    if(title) {
+      titleComponent = (
+        <View style={[Themes.current.popup.titleWrap]}>
+          <Include.Text style={Themes.current.text.popupTitle}>{title}</Include.Text>
+          {closeButton}
+        </View>
+      );
+    }
     var closeButton = null;
     if (!disableClose) {
       closeButton=(
@@ -82,21 +97,25 @@ class DefaultPopup extends Popup{
     var button = null;
     if (buttonTitle) {
       button=(
-        <RectButton
-              onPress={()=>{onPress();}} text={buttonTitle}
-              contentStyle={{alignSelf:'center'}}
-              textStyle={{alignSelf:'center',marginLeft:0,fontSize :14,fontWeight :'bold'}}
-              style={Themes.current.component.normalGreenButton}/>
+        <ButtonWrap
+          onPress={() => {onPress();}}
+        >
+          <View style={{backgroundColor:'#fff',flex:1,justifyContent:'center',borderBottomRightRadius:buttonTitle2===undefined?4:0, borderBottomLeftRadius:4, height:45}}>
+            <Include.Text style={{alignSelf:'center',marginLeft:0,fontSize :14,fontWeight :'bold', color:'#1697B4'}}>{buttonTitle}</Include.Text>
+          </View>
+        </ButtonWrap>
       )
     }
     var button2 = null;
     if (buttonTitle2) {
       button2=(
-        <RectButton
-              onPress={()=>{onPress2();}} text={buttonTitle2}
-              contentStyle={{alignSelf:'center'}}
-              textStyle={{alignSelf:'center',marginLeft:0,fontSize :14,fontWeight :'bold'}}
-              style={Themes.current.component.normalRedButton}/>
+          <ButtonWrap
+            onPress={() => {onPress2();}}
+          >
+            <View style={{backgroundColor:'#fff',justifyContent:'center', flex:1,borderBottomRightRadius:4,marginLeft:1, height:45}}>
+              <Include.Text style={{alignSelf:'center',marginLeft:0,fontSize :14,fontWeight :'bold', color:'#e84393'}}>{buttonTitle2}</Include.Text>
+            </View>
+          </ButtonWrap>
       )
     }
 
@@ -105,16 +124,12 @@ class DefaultPopup extends Popup{
         <ButtonWrap onPress={()=>{
             onPressPopup();
           }}>
-          <View style={{backgroundColor:'#fff',padding:5,margin:5,borderRadius:4,...StyleConfig.default.shadownStyle,  ...self.props.style}}>
-            <View style={[Themes.current.popup.titleWrap, {paddingLeft: 20, paddingRight: 20}]}>
-              <Include.Text style={Themes.current.text.popupTitle}>{title}</Include.Text>
-              {closeButton}
-            </View>
-
-            <Include.Text style={{left:0,right:0,color:'#000',marginVertical:5,alignSelf:'center',textAlign :'center'}}>{description}</Include.Text>
+          <View style={{backgroundColor:'#fff',borderRadius:4,...StyleConfig.default.shadownStyle,  ...self.props.style}}>
+            {titleComponent}
+            {descriptionText}
             {description2Text}
             {self.props.children}
-            <View style={{flexDirection:'row', justifyContent: 'space-between', flex: 1}}>
+            <View style={{flexDirection:'row', justifyContent: 'space-between', backgroundColor:'#EDEEF0', borderBottomLeftRadius:4, borderBottomRightRadius:4}}>
               {button}
               {button2}
             </View>
@@ -124,18 +139,12 @@ class DefaultPopup extends Popup{
     }
     else{
       return(
-        <View style={{backgroundColor:'#fff',padding:5,margin:5,borderRadius:4,...StyleConfig.default.shadownStyle, ...self.props.style}}>
-
-          <View style={[Themes.current.popup.titleWrap, {paddingLeft: 20, paddingRight: 20}]}>
-            <Include.Text style={Themes.current.text.popupTitle}>{title}</Include.Text>
-            {closeButton}
-          </View>
-
-          <Include.Text style={{left:0,right:0,color:'#000',marginVertical:5,alignSelf:'center',textAlign :'center'}}>{description}</Include.Text>
-
+        <View style={{backgroundColor:'#fff',margin:15,borderRadius:4,paddingTop:20,...StyleConfig.default.shadownStyle, ...self.props.style}}>
+          {titleComponent}
+          {descriptionText}
           {description2Text}
           {self.props.children}
-          <View style={{flexDirection:'row', justifyContent: 'space-around'}}>
+          <View style={{flexDirection:'row', justifyContent: 'space-around', backgroundColor:'#EDEEF0', borderBottomLeftRadius:4, borderBottomRightRadius:4}}>
             {button}
             {button2}
           </View>
