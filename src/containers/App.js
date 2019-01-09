@@ -133,7 +133,7 @@ var App = React.createClass({
 
   handleAppStateChange:function(currentAppState){
     var self = this;
-    const { dispatch,state,navigator } = this.props;
+    const { dispatch,state,navigator, user } = this.props;
     Debug.log('handleAppStateChange ' + currentAppState , Debug.level.USER_TRACKER);
     var widthScreen = Dimensions.get('window').width;
     var heightScreen = Dimensions.get('window').height;
@@ -146,12 +146,8 @@ var App = React.createClass({
           // GcmAndroid.removeBadgeCount();
         }
         setTimeout(() => {
-          dispatch(AppStateActions_MiddleWare.getConfig())
-            .then(() => {
-              dispatch(AppStateActions_MiddleWare.getConfigForUseApp())
               if(user.memberInfo.member)
-                dispatch(UserActions_MiddleWare.get())
-            })
+                dispatch(UserActions_MiddleWare.get({_id:user.memberInfo.member._id}))
           }, 2000);
 
         break;
@@ -705,13 +701,13 @@ var App = React.createClass({
         </Animatable.View>
         <PopupManager rootView={self}/>
         {appState.showLoading ?
-          <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center', width:'100%', height:'100%', backgroundColor:'rgba(0,0,0,0.4)'}}>
             <View
-              style={{paddingVertical: 10, backgroundColor: '#000', borderRadius: 5, paddingHorizontal: 30}}>
+              style={{backgroundColor: '#fff', elevation:5, alignItems:'center', justifyContent:'center', borderRadius: 5, flexDirection:'row', width:'70%', height:80}}>
               <ActivityIndicator
-                color = {'#fff'}
+                color = {'#12CBC4'}
                 size = 'large'/>
-              <Include.Text style={{color: '#fff', fontWeight: 'bold'}}>Loading...</Include.Text>
+              <Include.Text style={{color: '#000', marginLeft: 10, fontSize:17}}>Đang tải dữ liệu ...</Include.Text>
             </View>
           </View>
         :null}
@@ -722,7 +718,9 @@ var App = React.createClass({
 
   componentDidMount : function(){
      var self = this;
-     var {dispatch} = self.props;
+     var {dispatch,user} = self.props;
+     if(user.memberInfo.member)
+       dispatch(UserActions_MiddleWare.get({_id:user.memberInfo.member._id}))
      // if (Platform.OS ==='android') {
      //  StatusBarAndroid.setHexColor(Themes.current.factor.backgroundColor);
      // }
@@ -753,6 +751,7 @@ function selectActions(state) {
     appState:state.AppState,
     navigator:state.Navigator,
     serverConnection:state.ServerConnection,
+    user:state.User
   }
 }
 

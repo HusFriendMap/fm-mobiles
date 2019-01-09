@@ -85,38 +85,33 @@ function Tracker(state ={} , action) {
     default:
   }
 
-  // var info =undefined;
-  // if (action.data&&action.data.res&&action.data.res.message && action.data.res.message!=='callback timeout') {
-  //   info = action.data.res.message;
-  // }
-  // else if (action.data &&action.data.message && action.data.message!=='callback timeout') {
-  //   info =action.data.message;
-  // }
-  // else if(action.data && action.data.err && action.data.err.body){
-  //   info= action.data.err;
-  // }
+  var info =undefined;
+  if (action.data&&action.data.res&&action.data.res.message && action.data.res.message!=='callback timeout') {
+    info = action.data.res.message;
+  }
+  else if (action.data &&action.data.message && action.data.message!=='callback timeout') {
+    info =action.data.message;
+  }
+  else if(action.data && action.data.errObj && action.data.errObj.data && action.data.errObj.data.message ){
+    info= action.data.errObj.data.message;
+  }
   // else if(action.data && action.data.body){
   //   info= action.data;
   // }
   //
   //
-  // if (info !== undefined) {
-  //   var buttonTitle = undefined;
-  //   var link='';
-  //   var extras={};
-  //   if (info.acts && Array.isArray(info.acts)) {
-  //     if (info.acts.length > 0) {
-  //       buttonTitle = info.acts[0].label;
-  //       link = info.acts[0].link;
-  //       extras = info.acts[0].extras;
-  //     }
-  //   }
-    // popupActions.setRenderContentAndShow(
-    //   FadeDownDefaultPopup,
-    //   {
-    //     description:info
-    //   })
-  // }
+  if (info !== undefined) {
+  popupActions.setRenderContentAndShow(
+    DefaultPopup,
+    {
+      title:info.head,
+      description:info.body,
+      onPress:() => {
+        popupActions.popPopup();
+      },
+      buttonTitle:'OK'
+    })
+  }
 
   //
   Debug.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^',Debug.level.MARK);
